@@ -65,8 +65,12 @@ module Irrgarten
             @generator.rand(MAX_USES + 1)
         end
 
+        #def self.intensity(competence)
+          # @generator.rand(competence)
+       # end HECHO POR ALEJANDRO, ABAJO MARINA. DISCUTIR SI FUNCIONA
+       
         def self.intensity(competence)
-            @generator.rand(competence)
+            @generator.rand * competence
         end
 
         #Indica si descartar o no un objeto
