@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "rdbg",
+      "name": "Depurar archivo actual",
+      "request": "launch",
+      "script": "${file}",
+      "args": [],
+      "askParameters": false,
+      "cwd": "${fileDirname}"
+    }
+  ]
+}
