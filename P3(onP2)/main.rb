@@ -25,4 +25,4 @@ module Irrgarten
     end
 end
 
-Irrgarten::Main.new
+Irrgarten::Main.main
