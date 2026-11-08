@@ -30,6 +30,19 @@ module Irrgarten
 
         #Se implementará en la P3
         def defend(received_attack)
+            is_dead = dead
+
+            unless is_dead
+                defensive_energy = Dice.intensity(@intelligence)
+
+                if defensive_energy < received_attack
+                    got_wounded
+                end
+
+                is_dead = dead
+            end
+
+            is_dead
         end
 
         #Modificador de la posición en una sola llamada
