@@ -31,6 +31,10 @@ module Irrgarten
 
         #Se implementará en la P3
         def spread_players(players)
+            players.each do |p|
+                pos = random_empty_pos
+                put_player_2D(-1 , -1, pos[@@ROW], pos[@@COL], p)
+            end
         end
 
         #true si hay un jugador en la casilla de salida
@@ -53,14 +57,57 @@ module Irrgarten
 
         #Se implementará en la P3
         def put_player(direction, player)
+            old_row = player.row
+            old_col = player.col
+
+            new_pos = dir_2_pos(old_row, old_col, direction)
+            monster = put_player_2D(old_row, old_col, new_pos[@@ROW], new_pos[@@COL], player)
+
+            monster
         end
 
         #Se implementará en la P3
         def add_block(orientation, start_row, start_col, length)
+            if orientation == Orientation::VERTICAL
+                inc_row = 1
+                inc_col = 0
+            else
+                inc_row = 0
+                inc_col = 1
+            end
+
+            row = start_row
+            col = start_col
+
+            while pos_ok(row, col) && empty_pos(row, col) && length > 0
+                @labyrinth[row][col] = @@BLOCK_CHAR
+                length -= 1
+                row += inc_row
+                col += inc_col
+            end
         end
 
         #Se implementará en la P3
         def valid_moves(row, col)
+            output = []
+
+            if can_step_on(row + 1, col)
+                output << Directions::DOWN
+            end
+
+            if can_step_on(row - 1, col)
+                output << Directions::UP
+            end
+
+            if can_step_on(row, col + 1)
+                output << Directions::RIGHT
+            end
+
+            if can_step_on(row, col - 1)
+                output << Directions::LEFT
+            end
+
+            output
         end
 
         private
@@ -126,6 +173,31 @@ module Irrgarten
 
         #Se implementará en la P3
         def put_player_2D(old_row, old_col, row, col, player)
+            output = nil
+
+            if can_step_on(row, col)
+                if pos_ok(old_row, old_col)
+                    p = @players[old_row][old_col]
+                    if p == player
+                        update_old_pos(row, col)
+                        @players[old_row][old_col] = nil
+                    end
+                end
+
+                monster_is_here = monster_pos(row, col)
+                if monster_is_here
+                    @labyrinth[row][col] = @@COMBAT_CHAR
+                    output = @monsters[row][col]
+                else
+                    number = player.number.to_s
+                    @labyrinth[row][col] = number
+                end
+
+                @players[row][col] = player
+                player.set_pos(row, col)
+            end
+
+            output
         end
     end
 end
