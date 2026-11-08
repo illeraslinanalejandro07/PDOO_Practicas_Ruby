@@ -74,8 +74,8 @@ module Irrgarten
 
         #Se implementará en la P3
         def receive_reward
-            w_reward = Dice.weapon_reward
-            s_reward = Dice.shield_reward
+            w_reward = Dice.weapons_reward
+            s_reward = Dice.shields_reward
 
             w_reward.times do
                 wnew = new_weapon
