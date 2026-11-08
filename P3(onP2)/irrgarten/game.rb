@@ -46,7 +46,7 @@ module Irrgarten
             @log = ""
             dead = @current_player.dead
 
-            unless dead
+            if !dead
                 direction = actual_direction(preferred_direction)
 
                 if direction != preferred_direction
@@ -61,9 +61,10 @@ module Irrgarten
                     winner = combat(monster)
                     manage_reward(winner)
                 end
+            else
+                manage_resurrection
             end
 
-            manage_resurrection
             end_game = finished
 
             unless end_game
