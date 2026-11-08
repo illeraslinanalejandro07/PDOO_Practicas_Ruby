@@ -179,7 +179,7 @@ module Irrgarten
                 if pos_ok(old_row, old_col)
                     p = @players[old_row][old_col]
                     if p == player
-                        update_old_pos(row, col)
+                        update_old_pos(old_row, old_col)
                         @players[old_row][old_col] = nil
                     end
                 end
