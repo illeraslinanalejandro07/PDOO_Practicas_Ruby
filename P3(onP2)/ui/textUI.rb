@@ -56,7 +56,7 @@ module UI
                     direction = Irrgarten::Directions::DOWN
                     got_valid_input = true
                 when "\e[C", "d", "D" # flecha derecha o d
-                    direction = Directions::RIGHT
+                    direction = Irrgarten::Directions::RIGHT
                     got_valid_input = true
                 when "\e[D", "a", "A" # flecha izquierda o a
                     direction = Directions::LEFT
