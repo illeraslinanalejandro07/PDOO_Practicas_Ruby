@@ -51,6 +51,15 @@ module Irrgarten
 
         #Se implementará en la P3
         def move(direction, valid_moves)
+            size = valid_moves.size
+            contained = valid_moves.include?(direction)
+
+            if size > 0 && !contained
+                first_element = valid_moves[0]
+                return first_element
+            else
+                return direction
+            end
         end
 
         #Fuerza más lo que aportan las armas
@@ -65,6 +74,21 @@ module Irrgarten
 
         #Se implementará en la P3
         def receive_reward
+            w_reward = Dice.weapon_reward
+            s_reward = Dice.shield_reward
+
+            w_reward.times do
+                wnew = new_weapon
+                receive_weapon(wnew)
+            end
+
+            s_reward.times do
+                snew = new_shield
+                receive_shield(snew)
+            end
+
+            extra_health = Dice.health_reward
+            @health += extra_health
         end
 
         def to_s
@@ -76,10 +100,20 @@ module Irrgarten
 
         #Se implementará en la P3
         def receive_weapon(w)
+            @weapons.delete_if { |wi| wi.discard }
+
+            if @weapons.size < @@MAX_WEAPONS
+                @weapons << w
+            end
         end
 
         #Se implementará en la P3
         def receive_shield(s)
+            @shields.delete_if { |si| si.discard }
+
+            if @shields.size < @@MAX_SHIELDS
+                @shields << s
+            end
         end
 
         #Nueva arma con parámetros del dado
@@ -109,6 +143,22 @@ module Irrgarten
 
         #Se implementará en la P3
         def manage_hit(received_attack)
+            defense = defensive_energy
+
+            if defense < received_attack
+                got_wounded
+                inc_consecutive_hits
+            else
+                reset_hits
+            end
+
+            lose = false
+            if @consecutive_hits == @@HITS2LOSE || dead
+                reset_hits
+                lose = true
+            end
+
+            lose
         end
 
         def reset_hits
