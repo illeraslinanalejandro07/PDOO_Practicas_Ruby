@@ -6,6 +6,7 @@ require_relative 'monster'
 require_relative 'labyrinth'
 require_relative 'game_state'
 require_relative 'orientation'
+require_relative 'game_character'
 
 module Irrgarten
     class Game
