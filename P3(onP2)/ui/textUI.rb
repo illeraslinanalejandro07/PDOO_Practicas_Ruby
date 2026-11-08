@@ -59,7 +59,7 @@ module UI
                     direction = Irrgarten::Directions::RIGHT
                     got_valid_input = true
                 when "\e[D", "a", "A" # flecha izquierda o a
-                    direction = Directions::LEFT
+                    direction = Irrgarten::Directions::LEFT
                     got_valid_input = true
                 else
                     puts "Entrada no válida. Por favor, use las flechas del teclado."
